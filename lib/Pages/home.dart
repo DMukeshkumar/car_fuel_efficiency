@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget{
           'Home Page',
           style: TextStyle(fontSize: 60, color: Colors.white),
         ),
+
       ),
   );
 }

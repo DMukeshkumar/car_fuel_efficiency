@@ -1,8 +1,8 @@
-import 'package:car_fuel_efficiency/Pages/chart.dart';
 import 'package:car_fuel_efficiency/Pages/home.dart';
-import 'package:car_fuel_efficiency/Pages/log_in.dart';
 import 'package:car_fuel_efficiency/Pages/settings.dart';
 import 'package:car_fuel_efficiency/Pages/speed.dart';
+import 'package:car_fuel_efficiency/Pages/log_in.dart';
+import 'package:car_fuel_efficiency/Pages/chart.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -21,24 +21,25 @@ class _MainPageState extends State<MainPage> {
 
   final screens =[
     HomePage(),
-    LogInPage(),
-    SpeedPage(),
     SettingsPage(),
-    ChartPage(),
+    SpeedPage(),
+    LogInPage(),
+    //ChartPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[
-      //Icon(Icons.home,size: 30,),
+      Icon(Icons.home,size: 30,),
       Icon(Icons.settings, size: 30),
       Icon(Icons.speed, size: 30),
       Icon(Icons.person, size: 30),
-      Icon(Icons.add_chart, size: 30),
+      //Icon(Icons.add_chart, size: 30),
 
     ];
 
     return MaterialApp(
+
       home: Scaffold(
         extendBody: true,
         backgroundColor: Colors.white30,

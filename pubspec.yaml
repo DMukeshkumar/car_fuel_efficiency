@@ -32,7 +32,7 @@ dependencies:
 
   curved_navigation_bar: ^1.0.1
 
-
+  flutter_svg: ^0.17.4
 
 
   # The following adds the Cupertino Icons font to your application.
