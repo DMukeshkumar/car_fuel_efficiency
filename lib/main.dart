@@ -2,6 +2,7 @@ import 'package:car_fuel_efficiency/Pages/home.dart';
 import 'package:car_fuel_efficiency/Pages/settings.dart';
 import 'package:car_fuel_efficiency/Pages/speed.dart';
 import 'package:car_fuel_efficiency/Pages/log_in.dart';
+import 'package:car_fuel_efficiency/Pages/register.dart';
 import 'package:car_fuel_efficiency/Pages/chart.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _MainPageState extends State<MainPage> {
     SettingsPage(),
     SpeedPage(),
     LogInPage(),
+    RegisterPage(),
     //ChartPage(),
   ];
 
@@ -65,7 +67,7 @@ class _MainPageState extends State<MainPage> {
             index: index,
             items: items,
             onTap: (index) => setState(() => this.index = index),
-          ), // CurvedNavigationBar
+          ),
         ),
       ),
     );
