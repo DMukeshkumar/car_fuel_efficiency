@@ -3,9 +3,9 @@ import 'package:car_fuel_efficiency/Pages/settings.dart';
 import 'package:car_fuel_efficiency/Pages/speed.dart';
 import 'package:car_fuel_efficiency/Pages/log_in.dart';
 import 'package:car_fuel_efficiency/Pages/register.dart';
-import 'package:car_fuel_efficiency/Pages/chart.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() {
   runApp(MainPage());
@@ -20,28 +20,32 @@ class _MainPageState extends State<MainPage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
   int index = 2;
 
-  final screens =[
+  final screens = [
     HomePage(),
     SettingsPage(),
     SpeedPage(),
     LogInPage(),
     RegisterPage(),
+    LogInPage(),
+    RegisterPage(),
+
     //ChartPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[
-      Icon(Icons.home,size: 30,),
+      Icon(
+        Icons.home,
+        size: 30,
+      ),
       Icon(Icons.settings, size: 30),
       Icon(Icons.speed, size: 30),
       Icon(Icons.person, size: 30),
       //Icon(Icons.add_chart, size: 30),
-
     ];
 
     return MaterialApp(
-
       home: Scaffold(
         extendBody: true,
         backgroundColor: Colors.white30,
@@ -56,19 +60,19 @@ class _MainPageState extends State<MainPage> {
           data: Theme.of(context).copyWith(
             iconTheme: IconThemeData(color: Colors.white),
           ),
-          child: CurvedNavigationBar(
-            key: navigationKey,
-            color: Colors.white30,
-            buttonBackgroundColor: Colors.purple,
-            backgroundColor: Colors.transparent,
-            height: 60,
-            animationCurve: Curves.easeInOut,
-            animationDuration: Duration(milliseconds: 200),
-            index: index,
-            items: items,
-            onTap: (index) => setState(() => this.index = index),
-          ),
-        ),
+              child: CurvedNavigationBar(
+                key: navigationKey,
+                color: Colors.white30,
+                buttonBackgroundColor: Colors.purple,
+                backgroundColor: Colors.transparent,
+                height: 60,
+                animationCurve: Curves.easeInOut,
+                animationDuration: Duration(milliseconds: 200),
+                index: index,
+                items: items,
+                onTap: (index) => setState(() => this.index = index),
+              ),
+            ),
       ),
     );
   }
