@@ -12,7 +12,7 @@ class SpeedPage extends StatelessWidget{
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SpeedometerWidget(),
-        theme: ThemeData(
+                theme: ThemeData(
             textTheme: TextTheme(
                 bodyText1: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 bodyText2: TextStyle(

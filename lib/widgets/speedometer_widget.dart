@@ -1,82 +1,81 @@
+import 'package:car_fuel_efficiency/Pages/braking.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:segment_display/segment_display.dart';
 import 'package:provider/provider.dart';
 import 'package:car_fuel_efficiency/Providers/provider.dart';
+import 'package:car_fuel_efficiency/Pages/acceleration.dart';
 
 class SpeedometerWidget extends StatelessWidget {
-
- @override
+  @override
   Widget build(BuildContext context) {
     final providerData = Provider.of<provider>(context);
     providerData.getSpeedUpdates();
     return Scaffold(
+      backgroundColor: Colors.greenAccent,
       appBar: AppBar(
         title: Text(
           "Speedometer",
           style: TextStyle(color: Colors.white, fontSize: 30),
         ),
-        backgroundColor: Color(0x665ac18e),
-                centerTitle: true,
+        backgroundColor: Colors.greenAccent,
+        // backgroundColor: Color(0x665ac18e),
+        centerTitle: true,
       ),
-      body : SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Center(
                     child: Column(children: <Widget>[
                   Text("Current Speed",
                       style: Theme.of(context).textTheme.bodyText1),
+                  SizedBox(
+                    height: 10,
+                  ),
                   SevenSegmentDisplay(
                       value:
                           '${providerData.speedometer.currentSpeed.toStringAsFixed(2)}',
                       size: 8,
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.greenAccent,
                       segmentStyle: HexSegmentStyle(
-                          enabledColor: Colors.green,
-                          disabledColor: Colors.white)),
-                  Text("Kmh", style: Theme.of(context).textTheme.bodyText1)
+                          enabledColor: Colors.black,
+                          disabledColor: Colors.greenAccent)),
+                  Text("Mph", style: Theme.of(context).textTheme.bodyText1)
                 ])),
               ),
-              SizedBox(height:10),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Column(children: <Widget>[
-                    Text("From 10 to 30 ",
-                        style: Theme.of(context).textTheme.bodyText1),
-                    SevenSegmentDisplay(
-                      value: "${providerData.speedometer.time10_30}",
-                      size: 8,
-                      backgroundColor: Colors.white,
-                      segmentStyle: HexSegmentStyle(
-                          enabledColor: Colors.green,
-                          disabledColor: Colors.white),
-                    ),
-                    Text("Seconds",
-                        style: Theme.of(context).textTheme.bodyText1)
-                  ]),
+          //    SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.all(4.0),
+                alignment: Alignment.center,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle:
+                        const TextStyle(fontSize: 40, color: Colors.black),
+                  ),
+                  child: const Text('Acceleration'),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AccelerationPage()));
+                  },
                 ),
               ),
               SizedBox(height: 10),
-              Padding(
+              Container(
                 padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Column(children: <Widget>[
-                    Text("From 30 to 10 ",
-                        style: Theme.of(context).textTheme.bodyText1),
-                    SevenSegmentDisplay(
-                        value: "${providerData.speedometer.time30_10}",
-                        size: 8,
-                        backgroundColor: Colors.white,
-                        segmentStyle: HexSegmentStyle(
-                            enabledColor: Colors.green,
-                            disabledColor: Colors.white)),
-                    Text("Seconds",
-                        style: Theme.of(context).textTheme.bodyText1)
-                  ]),
+                alignment: Alignment.center,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 40),
+                  ),
+                  child: const Text('Braking Intensity'),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => BrakingPage()));
+                  },
                 ),
               ),
               SizedBox(height: 100),

@@ -2,7 +2,7 @@ import 'package:car_fuel_efficiency/Pages/home.dart';
 import 'package:car_fuel_efficiency/Pages/settings.dart';
 import 'package:car_fuel_efficiency/Pages/speed.dart';
 import 'package:car_fuel_efficiency/Pages/log_in.dart';
-import 'package:car_fuel_efficiency/Pages/register.dart';
+//import 'package:car_fuel_efficiency/Pages/register.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,20 +25,14 @@ class _MainPageState extends State<MainPage> {
     SettingsPage(),
     SpeedPage(),
     LogInPage(),
-    RegisterPage(),
-    LogInPage(),
-    RegisterPage(),
-
+    //RegisterPage(),
     //ChartPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[
-      Icon(
-        Icons.home,
-        size: 30,
-      ),
+      Icon(Icons.home,size: 30,),
       Icon(Icons.settings, size: 30),
       Icon(Icons.speed, size: 30),
       Icon(Icons.person, size: 30),
@@ -50,8 +44,8 @@ class _MainPageState extends State<MainPage> {
         extendBody: true,
         backgroundColor: Colors.white30,
         appBar: AppBar(
-          title: Text('Car Fuel Efficiency '),
-          backgroundColor: Colors.transparent,
+          title: Text('EcoDrive'),
+          backgroundColor: Colors.greenAccent,
           elevation: 0,
           centerTitle: true,
         ),
@@ -60,6 +54,7 @@ class _MainPageState extends State<MainPage> {
           data: Theme.of(context).copyWith(
             iconTheme: IconThemeData(color: Colors.white),
           ),
+
               child: CurvedNavigationBar(
                 key: navigationKey,
                 color: Colors.white30,
