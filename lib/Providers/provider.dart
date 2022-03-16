@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:car_fuel_efficiency/utils/utils_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -6,6 +7,7 @@ import 'package:location/location.dart' hide LocationAccuracy;
 
 
 class provider with ChangeNotifier {
+
   Speedometer _speedometer =
   new Speedometer(currentSpeed: 0, time0_48: 0, time48_0: 0);
 
@@ -17,6 +19,7 @@ class provider with ChangeNotifier {
   Future<bool> checkLocationServiceAndPermissionStatus() async {
     Location location = new Location();
     bool _isLocationServiceEnabled;
+    LocationPermission permission = await Geolocator.requestPermission();
     PermissionStatus _permissionGranted;
     _isLocationServiceEnabled = await location.serviceEnabled();
     if (!_isLocationServiceEnabled) {
@@ -41,7 +44,8 @@ class provider with ChangeNotifier {
 
   void updateSpeed(Position position) {
     double speed = (position.speed) * 3.6;
-    _speedometer.currentSpeed = speed * 1.609;
+
+    _speedometer.currentSpeed = speed/1.609;
 
     if (speed >= SPEED_0 || speed <= SPEED_48) {
       checkSpeedAndMeasureTimeWhileInRange(speed);
@@ -60,11 +64,20 @@ class provider with ChangeNotifier {
   //Method to get the vehicle speed updates
   getSpeedUpdates() async {
     if (await checkLocationServiceAndPermissionStatus()) {
-      LocationOptions options =
-      LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
-      _geolocator.getPositionStream(options).listen((position) {
-        updateSpeed(position);
+      var accuracy = await Geolocator.getLocationAccuracy();
+      //LocationOptions options =
+      //LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 10);
+      final LocationSettings locationSettings = LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 10,
+      );
+
+          StreamSubscription<Position> positionStream = Geolocator.getPositionStream(locationSettings: locationSettings).
+      listen((Position? position) {
+        //updateSpeed(LocationSettings);
+        print(position == null ? 'Unknown' : '${position.latitude.toString()}, ${position.longitude.toString()}');
       });
+
     }
   }
 

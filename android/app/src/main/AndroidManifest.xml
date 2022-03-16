@@ -3,8 +3,9 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+
     <application
-        android:label="car_fuel_efficiency"
+        android:label="EcoDrive"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

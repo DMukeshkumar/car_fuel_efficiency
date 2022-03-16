@@ -47,7 +47,7 @@ class SpeedometerWidget extends StatelessWidget {
               ),
           //    SizedBox(height: 10),
               Container(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(2.0),
                 alignment: Alignment.center,
                 child: TextButton(
                   style: TextButton.styleFrom(
@@ -65,7 +65,7 @@ class SpeedometerWidget extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Container(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(2.0),
                 alignment: Alignment.center,
                 child: TextButton(
                   style: TextButton.styleFrom(

@@ -27,8 +27,8 @@ class _RegisterPageState extends State<RegisterPage> {
       );
 
     } else {
-      var url = "http://192.168.10.63/localconnect/register.php";
-      var response = await http.post(url, body: {
+      var url = "http:// 192.168.1.18/localconnect/register.php";
+      var response = await http.post(Uri.parse(url), body: {
         "name": name.text,
         "username": username.text,
         "password": password.text,

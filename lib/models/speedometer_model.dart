@@ -1,6 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:car_fuel_efficiency/Providers/provider.dart';
-
 
 class Speedometer {
   double currentSpeed;

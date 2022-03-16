@@ -34,8 +34,8 @@ class _LogInPageState extends State<LogInPage> {
         fontSize: 16.0,
       );
     } else {
-      var url = "http://192.168.10.63/localconnect/login.php";
-      var response = await http.post(url, body: {
+      var url = "http:// 192.168.1.18/localconnect/login.php";
+      var response = await http.post(Uri.parse(url), body: {
         "username": username.text,
         "password": password.text,
       });
