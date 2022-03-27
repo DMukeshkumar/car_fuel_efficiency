@@ -7,6 +7,10 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'Pages/chart.dart';
+
+
+//Main file of the package which integrates all other files into one application
 void main() {
   runApp(MainPage());
 }
@@ -20,23 +24,23 @@ class _MainPageState extends State<MainPage> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
   int index = 2;
 
+  //important pages are added onto the bottom navigation bar
   final screens = [
     HomePage(),
-    SettingsPage(),
+    ChartPage(),
     SpeedPage(),
     LogInPage(),
-    //RegisterPage(),
-    //ChartPage(),
   ];
 
   @override
+
+  //relevant icons are added according to the pages they will be used for
   Widget build(BuildContext context) {
     final items = <Widget>[
       Icon(Icons.home,size: 30,),
-      Icon(Icons.settings, size: 30),
+      Icon(Icons.bar_chart, size: 30),
       Icon(Icons.speed, size: 30),
       Icon(Icons.person, size: 30),
-      //Icon(Icons.add_chart, size: 30),
     ];
 
     return MaterialApp(
@@ -54,20 +58,19 @@ class _MainPageState extends State<MainPage> {
           data: Theme.of(context).copyWith(
             iconTheme: IconThemeData(color: Colors.white),
           ),
-
-              child: CurvedNavigationBar(
-                key: navigationKey,
-                color: Colors.white30,
-                buttonBackgroundColor: Colors.purple,
-                backgroundColor: Colors.transparent,
-                height: 60,
-                animationCurve: Curves.easeInOut,
-                animationDuration: Duration(milliseconds: 200),
-                index: index,
-                items: items,
-                onTap: (index) => setState(() => this.index = index),
-              ),
-            ),
+          child: CurvedNavigationBar(
+            key: navigationKey,
+            color: Colors.white30,
+            buttonBackgroundColor: Colors.purple,
+            backgroundColor: Colors.transparent,
+            height: 60,
+            animationCurve: Curves.easeInOut,
+            animationDuration: Duration(milliseconds: 200),
+            index: index,
+            items: items,
+            onTap: (index) => setState(() => this.index = index),
+          ),
+        ),
       ),
     );
   }

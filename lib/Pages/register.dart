@@ -1,5 +1,5 @@
-import 'package:car_fuel_efficiency/Pages/home.dart';
 import 'package:car_fuel_efficiency/Pages/log_in.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
       );
 
     } else {
-      var url = "http:// 192.168.1.18/localconnect/register.php";
+      var url = "http://192.168.1.117/localconnect/register.php";
       var response = await http.post(Uri.parse(url), body: {
         "name": name.text,
         "username": username.text,
@@ -100,18 +100,11 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  //text field for users to enter their email address
   Widget buildEmail() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Text(
-          'Email',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
         SizedBox(height: 10),
         Container(
           alignment: Alignment.centerLeft,
@@ -122,8 +115,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 BoxShadow(
                     color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
               ]),
-          height: 50,
-          child: TextField(
+          height: 60,
+          child: TextFormField(
             controller: username,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.black87),
@@ -133,13 +126,24 @@ class _RegisterPageState extends State<RegisterPage> {
               prefixIcon: Icon(Icons.email, color: Color(0xff5ac18e)),
               hintText: 'Email',
               hintStyle: TextStyle(color: Colors.black38),
+              suffixIcon: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () => (Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LogInPage()))),
+              ),
             ),
+            autofillHints: [AutofillHints.email],
+            validator: (email) =>
+            email != null && !EmailValidator.validate(email)
+                ? 'Enter a valid email'
+                : null,
           ),
         )
       ],
     );
   }
 
+  //password field for user to enter their chosen password
   Widget buildPassword() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

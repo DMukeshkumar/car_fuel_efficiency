@@ -15,6 +15,8 @@ class LogInPage extends StatefulWidget {
 
 class _LogInPageState extends State<LogInPage> {
   bool isRememberMe = false;
+
+  //controllers to observe data entered into the necessary fields
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -26,6 +28,8 @@ class _LogInPageState extends State<LogInPage> {
   }
 
   Future login(BuildContext cont) async {
+
+    //checks if user has entered any data into required fields
     if (username.text == "" || password.text == "") {
       Fluttertoast.showToast(
         msg: "Username and Password fields cannot be blank",
@@ -34,7 +38,9 @@ class _LogInPageState extends State<LogInPage> {
         fontSize: 16.0,
       );
     } else {
-      var url = "http:// 192.168.1.18/localconnect/login.php";
+      //if user has entered data into required fields,
+      //database is connected and checks if user is already registered
+      var url = "http://192.168.1.117/localconnect/login.php";
       var response = await http.post(Uri.parse(url), body: {
         "username": username.text,
         "password": password.text,
@@ -42,10 +48,12 @@ class _LogInPageState extends State<LogInPage> {
 
       var data = json.decode(response.body);
       if (data == "success") {
+        //if user entered correct details and is able to log in, they are taken to speedometer page
         Navigator.push(
             cont, MaterialPageRoute(builder: (context) => SpeedPage()));
       } else {
         Fluttertoast.showToast(
+          //if user details does not match then error message is shown
           msg: "The Username and Password combination does not exist",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
@@ -55,6 +63,7 @@ class _LogInPageState extends State<LogInPage> {
     }
   }
 
+  //email address text field
   Widget buildEmail() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,6 +106,8 @@ class _LogInPageState extends State<LogInPage> {
     );
   }
 
+
+  //password text field
   Widget buildPassword() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,6 +148,7 @@ class _LogInPageState extends State<LogInPage> {
     );
   }
 
+  //forgot password text field
   Widget buildForgotPassButton() {
     return Container(
       alignment: Alignment.centerRight,
@@ -155,6 +167,8 @@ class _LogInPageState extends State<LogInPage> {
     );
   }
 
+
+  //remember me check box
   Widget buildRememberCheckBox() {
     return Container(
       height: 20,
@@ -186,12 +200,15 @@ class _LogInPageState extends State<LogInPage> {
     );
   }
 
+
+  //log in button
   Widget buildLogInButton() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5,
+        //on pressing the button, user verification begins
         onPressed: () {
           final form = formKey.currentState!;
           if (form.validate()) {
@@ -218,6 +235,8 @@ class _LogInPageState extends State<LogInPage> {
     );
   }
 
+
+  //sign up button which directs user to sign up page
   Widget buildSignUpButton() {
     return GestureDetector(
       onTap: () {
@@ -245,6 +264,8 @@ class _LogInPageState extends State<LogInPage> {
     );
   }
 
+
+  //main UI of the page
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -291,6 +312,8 @@ class _LogInPageState extends State<LogInPage> {
                               fontSize: 40,
                               fontWeight: FontWeight.bold),
                         ),
+
+                        //all the fields are displayed on the canvas of the log in page
                         const SizedBox(height: 30),
                         buildEmail(),
                         SizedBox(height: 20),

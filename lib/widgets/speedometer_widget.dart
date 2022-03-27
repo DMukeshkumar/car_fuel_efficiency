@@ -5,6 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:car_fuel_efficiency/Providers/provider.dart';
 import 'package:car_fuel_efficiency/Pages/acceleration.dart';
 
+
+
+//Main UI of all the speed data.
+//turns raw data into texts with suitable colour
 class SpeedometerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -35,14 +39,14 @@ class SpeedometerWidget extends StatelessWidget {
                     height: 10,
                   ),
                   SevenSegmentDisplay(
-                      value:
+                    value:
                           '${providerData.speedometer.currentSpeed.toStringAsFixed(2)}',
                       size: 8,
                       backgroundColor: Colors.greenAccent,
                       segmentStyle: HexSegmentStyle(
                           enabledColor: Colors.black,
                           disabledColor: Colors.greenAccent)),
-                  Text("Mph", style: Theme.of(context).textTheme.bodyText1)
+                  Text("mph", style: Theme.of(context).textTheme.bodyText1)
                 ])),
               ),
           //    SizedBox(height: 10),
