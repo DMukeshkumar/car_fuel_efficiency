@@ -9,8 +9,10 @@ class Speedometer {
       {required this.currentSpeed,
         required this.time0_48,
         required this.time48_0,
+
         this.range = LESS_0});
 }
+
 
 const FROM_0_TO_48 = 1;
 const FROM_48_TO_0 = 2;

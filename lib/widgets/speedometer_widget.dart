@@ -4,7 +4,7 @@ import 'package:segment_display/segment_display.dart';
 import 'package:provider/provider.dart';
 import 'package:car_fuel_efficiency/Providers/provider.dart';
 import 'package:car_fuel_efficiency/Pages/acceleration.dart';
-
+import 'dart:io' show Platform;
 
 
 //Main UI of all the speed data.
@@ -33,30 +33,32 @@ class SpeedometerWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Center(
                     child: Column(children: <Widget>[
-                  Text("Current Speed",
-                      style: Theme.of(context).textTheme.bodyText1),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  SevenSegmentDisplay(
-                    value:
+                      Text("Current Speed",
+                          style: Theme.of(context).textTheme.bodyText1),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SevenSegmentDisplay(
+                          value:
                           '${providerData.speedometer.currentSpeed.toStringAsFixed(2)}',
-                      size: 8,
-                      backgroundColor: Colors.greenAccent,
-                      segmentStyle: HexSegmentStyle(
-                          enabledColor: Colors.black,
-                          disabledColor: Colors.greenAccent)),
-                  Text("mph", style: Theme.of(context).textTheme.bodyText1)
-                ])),
+
+                          size: 8,
+                          backgroundColor: Colors.greenAccent,
+                          segmentStyle: HexSegmentStyle(
+                              enabledColor: Colors.black,
+                              disabledColor: Colors.greenAccent)),
+
+                      Text("mph", style: Theme.of(context).textTheme.bodyText1)
+                    ])),
               ),
-          //    SizedBox(height: 10),
+              //    SizedBox(height: 10),
               Container(
                 padding: const EdgeInsets.all(2.0),
                 alignment: Alignment.center,
                 child: TextButton(
                   style: TextButton.styleFrom(
                     textStyle:
-                        const TextStyle(fontSize: 40, color: Colors.black),
+                    const TextStyle(fontSize: 40, color: Colors.black),
                   ),
                   child: const Text('Acceleration'),
                   onPressed: () {

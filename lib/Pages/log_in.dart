@@ -1,3 +1,4 @@
+import 'package:car_fuel_efficiency/Pages/navigation.dart';
 import 'package:car_fuel_efficiency/Pages/register.dart';
 import 'package:car_fuel_efficiency/Pages/speed.dart';
 import 'package:email_validator/email_validator.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LogInPage extends StatefulWidget {
   @override
@@ -28,7 +31,6 @@ class _LogInPageState extends State<LogInPage> {
   }
 
   Future login(BuildContext cont) async {
-
     //checks if user has entered any data into required fields
     if (username.text == "" || password.text == "") {
       Fluttertoast.showToast(
@@ -40,7 +42,7 @@ class _LogInPageState extends State<LogInPage> {
     } else {
       //if user has entered data into required fields,
       //database is connected and checks if user is already registered
-      var url = "http://192.168.1.117/localconnect/login.php";
+      var url = "http://192.168.1.121/localconnect/login.php";
       var response = await http.post(Uri.parse(url), body: {
         "username": username.text,
         "password": password.text,
@@ -48,9 +50,12 @@ class _LogInPageState extends State<LogInPage> {
 
       var data = json.decode(response.body);
       if (data == "success") {
-        //if user entered correct details and is able to log in, they are taken to speedometer page
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        preferences.setString('username', username.text);
+                //await FlutterSession().set('token',username.text);
         Navigator.push(
-            cont, MaterialPageRoute(builder: (context) => SpeedPage()));
+          //if user entered correct details and is able to log in, they are taken to main page
+            cont, MaterialPageRoute(builder: (context) =>  NavigationPage()));
       } else {
         Fluttertoast.showToast(
           //if user details does not match then error message is shown
@@ -62,7 +67,6 @@ class _LogInPageState extends State<LogInPage> {
       }
     }
   }
-
   //email address text field
   Widget buildEmail() {
     return Column(
@@ -105,8 +109,6 @@ class _LogInPageState extends State<LogInPage> {
       ],
     );
   }
-
-
   //password text field
   Widget buildPassword() {
     return Column(
@@ -147,7 +149,6 @@ class _LogInPageState extends State<LogInPage> {
       ],
     );
   }
-
   //forgot password text field
   Widget buildForgotPassButton() {
     return Container(
@@ -166,8 +167,6 @@ class _LogInPageState extends State<LogInPage> {
       ),
     );
   }
-
-
   //remember me check box
   Widget buildRememberCheckBox() {
     return Container(
@@ -199,8 +198,6 @@ class _LogInPageState extends State<LogInPage> {
       ),
     );
   }
-
-
   //log in button
   Widget buildLogInButton() {
     return Container(
@@ -208,7 +205,6 @@ class _LogInPageState extends State<LogInPage> {
       width: double.infinity,
       child: RaisedButton(
         elevation: 5,
-        //on pressing the button, user verification begins
         onPressed: () {
           final form = formKey.currentState!;
           if (form.validate()) {
@@ -234,8 +230,6 @@ class _LogInPageState extends State<LogInPage> {
       ),
     );
   }
-
-
   //sign up button which directs user to sign up page
   Widget buildSignUpButton() {
     return GestureDetector(
@@ -263,8 +257,6 @@ class _LogInPageState extends State<LogInPage> {
       ),
     );
   }
-
-
   //main UI of the page
   @override
   Widget build(BuildContext context) {
@@ -312,7 +304,6 @@ class _LogInPageState extends State<LogInPage> {
                               fontSize: 40,
                               fontWeight: FontWeight.bold),
                         ),
-
                         //all the fields are displayed on the canvas of the log in page
                         const SizedBox(height: 30),
                         buildEmail(),

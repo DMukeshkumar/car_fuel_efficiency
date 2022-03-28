@@ -1,5 +1,4 @@
 import 'package:car_fuel_efficiency/Pages/log_in.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +17,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController name = TextEditingController();
 
   Future register(BuildContext cont) async {
+    //checks if user has entered any data into required fields
     if (name.text == "" || username.text == "" || password.text == "") {
       Fluttertoast.showToast(
         msg: "Username and Password fields cannot be blank",
@@ -27,7 +27,9 @@ class _RegisterPageState extends State<RegisterPage> {
       );
 
     } else {
-      var url = "http://192.168.1.117/localconnect/register.php";
+      //if user has entered data into required fields,
+      //database is connected and checks if user is already registered
+      var url = "http://192.168.1.121/localconnect/register.php";
       var response = await http.post(Uri.parse(url), body: {
         "name": name.text,
         "username": username.text,
@@ -46,6 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
           fontSize: 16.0,
         );
       }else{
+        //if user entered acceptable details, they are able to sign up and confirmation message is shown
         Fluttertoast.showToast(
             msg: "Registration Successful",
             toastLength: Toast.LENGTH_SHORT,
@@ -59,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
   }
-
+  //name text field
   Widget buildName() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,12 +102,19 @@ class _RegisterPageState extends State<RegisterPage> {
       ],
     );
   }
-
-  //text field for users to enter their email address
+  //email address text field
   Widget buildEmail() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        const Text(
+          'Email',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         SizedBox(height: 10),
         Container(
           alignment: Alignment.centerLeft,
@@ -115,8 +125,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 BoxShadow(
                     color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
               ]),
-          height: 60,
-          child: TextFormField(
+          height: 50,
+          child: TextField(
             controller: username,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: Colors.black87),
@@ -126,24 +136,13 @@ class _RegisterPageState extends State<RegisterPage> {
               prefixIcon: Icon(Icons.email, color: Color(0xff5ac18e)),
               hintText: 'Email',
               hintStyle: TextStyle(color: Colors.black38),
-              suffixIcon: IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () => (Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LogInPage()))),
-              ),
             ),
-            autofillHints: [AutofillHints.email],
-            validator: (email) =>
-            email != null && !EmailValidator.validate(email)
-                ? 'Enter a valid email'
-                : null,
           ),
         )
       ],
     );
   }
-
-  //password field for user to enter their chosen password
+  //password text field
   Widget buildPassword() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,46 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
       ],
     );
   }
-
- /* Widget buildConfirmPassword() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Confirm Password',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 10),
-        Container(
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))
-              ]),
-          height: 50,
-          child: TextField(
-            obscureText: true,
-            style: TextStyle(color: Colors.black87),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14),
-              prefixIcon: Icon(Icons.lock, color: Color(0xff5ac18e)),
-              hintText: 'Confirm Password',
-              hintStyle: TextStyle(color: Colors.black38),
-            ),
-          ),
-        )
-      ],
-    );
-  }*/
-
+  //sign up button
   Widget buildSignUpButton() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25),
@@ -245,7 +205,7 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-
+//log in button to take user back to log in page
   Widget buildLogInButton() {
     return GestureDetector(
       onTap: () {
@@ -254,9 +214,7 @@ class _RegisterPageState extends State<RegisterPage> {
       },
       child: RichText(
         text: TextSpan(
-
             children: [
-
               TextSpan(
                   text: 'Already Have An Account? ',
                   style: TextStyle(
@@ -277,7 +235,7 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-
+  //main UI of the page
   @override
   Widget build(BuildContext context) {
     return Scaffold(

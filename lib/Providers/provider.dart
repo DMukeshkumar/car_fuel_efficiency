@@ -18,11 +18,12 @@ class provider with ChangeNotifier {
 
   //sets all the data displays to 0 when opening the application
   Speedometer _speedometer =
-      new Speedometer(currentSpeed: 0, time0_48: 0, time48_0: 0);
+  new Speedometer(currentSpeed: 0, time0_48: 0, time48_0: 0,);
 
   Speedometer get speedometer => _speedometer;
   Stopwatch _stopwatch = Stopwatch();
   //final Geolocator _geolocator = Geolocator();
+
 
   //Method to check location service status and location permission status
   Future<bool> checkLocationServiceAndPermissionStatus() async {
@@ -47,7 +48,9 @@ class provider with ChangeNotifier {
       _permissionGranted = await location.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
         showErrorToast(
-            "EcoDrive requires the location permission to be able to measure the vehicle speed");
+            "EcoDrive requires user to grand location permission");
+        showErrorToast(
+            "User can change location access by going to smartphone settings");
       }
     }
     return _isLocationServiceEnabled &&
@@ -55,14 +58,13 @@ class provider with ChangeNotifier {
   }
 
 
+
   //updates the speed using location position
   void updateSpeed(Position position) {
 
     //as the speed is calculated based on change in metres, this methods changes it into mph
     double speed = (position.speed) * 3.6;
-
     _speedometer.currentSpeed = speed / 1.609;
-
 
     //checks if speed is less than 48 (30 in mph)
     if (speed >= SPEED_0 || speed <= SPEED_48) {
@@ -76,13 +78,11 @@ class provider with ChangeNotifier {
     print("current speed is : " + speed.toString());
     print("time0_30 is : " + speedometer.time0_48.toString());
     print("time30_0 is : " + speedometer.time48_0.toString());
-
     notifyListeners();
   }
 
   //Method to get the vehicle speed updates
   getSpeedUpdates() async {
-
     if (await checkLocationServiceAndPermissionStatus()) {
       final LocationSettings locationSettings = LocationSettings(
         accuracy: LocationAccuracy.high, //sets location accuracy to highest possible
@@ -90,40 +90,33 @@ class provider with ChangeNotifier {
       );
 
       StreamSubscription<Position> positionStream =
-          Geolocator.getPositionStream(locationSettings: locationSettings)
-              .listen((Position? position) {
+      Geolocator.getPositionStream(locationSettings: locationSettings)
+          .listen((Position? position) {
         updateSpeed(position!); //updates the speed when position value is not null
         print(position == null
             ? 'Unknown'
-            //prints latitude and longitude positions onto the console
+        //prints latitude and longitude positions onto the console
             : '${position.latitude.toString()}, ${position.longitude.toString()}');
       });
     }
-
   }
 
+
   void checkSpeedAndMeasureTimeWhileInRange(double vehicleSpeed) {
-
     if (vehicleSpeed >= SPEED_0) {
-      TextEditingController: speed;
-
-      //check if the vehicle speed was less than 0 KMH
-      if (speedometer.range == LESS_0) {
+      if (speedometer.range == LESS_0) {//check if the vehicle speed was less than 0 KMH
         speedometer.range = FROM_0_TO_48;
         _stopwatch.start();
         speedometer.time0_48 = _stopwatch.elapsed.inSeconds;
       }
-      //check if the vehicle speed was in the range from 10 to 30
-
+      //check if the vehicle speed was in the range from 0 to 48 (30 in miles)
       else if (speedometer.range == FROM_0_TO_48) {
         //update the time on the screen accordingly (time0_48)
         speedometer.time0_48 = _stopwatch.elapsed.inSeconds;
       }
     }
-
     if (vehicleSpeed <= SPEED_48) {
-      //check if the vehicle speed was more than 30 KMH
-      if (speedometer.range == OVER_48) {
+      if (speedometer.range == OVER_48) {      //check if the vehicle speed was more than 30 KMH
         speedometer.range = FROM_48_TO_0;
         _stopwatch.start();
         speedometer.time48_0 = _stopwatch.elapsed.inSeconds;
